@@ -7,6 +7,7 @@ import TAJobDisplayComponent from './TAJobDisplayComponent';
 import { UserContext } from '../provider';
 import AvatarWrapper from '../components/AvatarWrapper';
 import AdminDashboard from './AdminDashboard';
+import useAutoLogout from '../components/AutoLogOut';
 import { link } from 'fs';
 
 
@@ -60,7 +61,16 @@ const Home: React.FC = () => {
     navigate('/home-default');
   };
 
+  /**
+   * Automatically log off user after certain amount of time
+   */
+  const TIMEOUT_DURATION = 10 * 60 * 1000; // 1 minutes
 
+  const logout = () => {
+    navigate('/home-default');
+  };
+
+  useAutoLogout(TIMEOUT_DURATION, logout);
 
   /**
    * Navigate to the corresponding user profile. 
