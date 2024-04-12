@@ -7,8 +7,10 @@ import TAJobDisplayComponent from './TAJobDisplayComponent';
 import { UserContext } from '../provider';
 import AvatarWrapper from '../components/AvatarWrapper';
 import AdminDashboard from './AdminDashboard';
-import useAutoLogout from '../components/AutoLogOut';
+import useAutoLogout from '../components/AutoLogout';
 import { link } from 'fs';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 
 // Define an interface 'User' to specify the structure of a user object.
@@ -22,6 +24,7 @@ import { link } from 'fs';
 
 // Define a functional component called 'Home' using the React.FC (Functional Component) type.
 const Home: React.FC = () => {
+  const [showPopup, setShowPopup] = useState(true);
   // Initialize a 'user' state variable using the 'useState' hook, initially set to 'null'.
   const userContext = useContext(UserContext);
   if (!userContext) {
@@ -64,13 +67,13 @@ const Home: React.FC = () => {
   /**
    * Automatically log off user after certain amount of time
    */
-  const TIMEOUT_DURATION = 10 * 60 * 1000; // 1 minutes
+  const TIMEOUT_DURATION = 0.25 * 60 * 1000; // 1 minutes
 
   const logout = () => {
     navigate('/home-default');
   };
 
-  useAutoLogout(TIMEOUT_DURATION, logout);
+
 
   /**
    * Navigate to the corresponding user profile. 
@@ -134,6 +137,14 @@ const Home: React.FC = () => {
     // Render the component within a container with a maximum width of 'sm'.
 
     <div>
+      <div>
+            <h4>Popup - GeeksforGeeks</h4>
+            <Popup 
+                position="right center">
+                <div>GeeksforGeeks</div>
+                <button>Click here</button>
+            </Popup>
+        </div>
       {/* Blue banner with "Login" button */}
       <div
         style={{
@@ -221,8 +232,6 @@ const Home: React.FC = () => {
                   >
                     View Tasks
                   </Button>
-                 
-                 
 
                 </>
               ) : user.role === 'student' ? (
